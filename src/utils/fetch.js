@@ -1,0 +1,98 @@
+import axios from 'axios';
+import { Message, MessageBox } from 'element-ui';
+import store from '../store';
+// import { getToken, getId } from './auth';
+import qs from 'qs';
+
+// 创建axios实例
+const service = axios.create({
+    withCredentials: true, // 上传cookie
+    baseURL: process.env.BASE_API, // api的base_url
+    timeout: process.env.TIMEOUT // 请求超时时间
+});
+
+// request拦截器
+service.interceptors.request.use(config => {
+    if (store.getters.token) {
+        // config.headers['X-Token'] = getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
+        // if (!config.data) {
+        //     config.data = { AccountId: getId() };
+        // } else {
+        //     config.data.AccountId = getId();
+        // }
+    }
+    config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+    // console.log(config);
+    config.data = qs.stringify(config.data);
+    // console.log(config);
+    // config.headers['Content-Type'] = 'multipart/form-data';
+    return config;
+}, error => {
+    // Do something with request error
+    console.log(error); // for debug
+    Message({
+        message: '请求错误！',
+        type: 'error',
+        duration: 5 * 1000
+    });
+    Promise.reject(error);
+});
+
+// respone拦截器
+service.interceptors.response.use(
+    response => {
+        if (response.status !== 200) {
+            console.log(response);// for debug
+            Message({
+                message: '返回错误！',
+                type: 'error',
+                duration: 5 * 1000
+            });
+            return Promise.reject(response);
+        }
+
+        const res = response.data;
+        if (!res.code) {
+            // 非标准格式数据
+            console.log(response);// for debug
+            return response.data;
+        }
+
+        if (res.code === 200) {
+            return response.data;
+        } else {
+            // 50008:非法的token; 50012:其他客户端登录了;  50014:Token 过期了;
+            if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
+                MessageBox.confirm(res.msg + ' 您可以取消继续留在该页面，或者重新登录', '确定登出', {
+                    confirmButtonText: '重新登录',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    store.dispatch('FedLogOut').then(() => {
+                        location.reload();// 为了重新实例化vue-router对象 避免bug
+                    });
+                }).catch(error => {
+                    console.log(error);
+                });
+            } else {
+                Message({
+                    message: res.msg,
+                    type: 'error',
+                    duration: 5 * 1000
+                });
+            }
+            return Promise.reject(response.data);
+        }
+    },
+    error => {
+        console.log(error);// for debug
+        Message({
+            message: '返回错误！',
+            type: 'error',
+            duration: 5 * 1000
+        });
+        return Promise.reject(error);
+    }
+);
+
+export default service;

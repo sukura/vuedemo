@@ -1,3 +1,6 @@
 module.exports = {
-  NODE_ENV: '"production"'
-}
+    TITLE: '"VUE demo测试"',
+    TIMEOUT: 10000,
+    NODE_ENV: '"production"',
+    API_ROOT: '"/test"'
+};
