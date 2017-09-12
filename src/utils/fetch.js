@@ -13,19 +13,8 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
-    if (store.getters.token) {
-        // config.headers['X-Token'] = getToken(); // 让每个请求携带自定义token 请根据实际情况自行修改
-        // if (!config.data) {
-        //     config.data = { AccountId: getId() };
-        // } else {
-        //     config.data.AccountId = getId();
-        // }
-    }
     config.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-    // console.log(config);
     config.data = qs.stringify(config.data);
-    // console.log(config);
-    // config.headers['Content-Type'] = 'multipart/form-data';
     return config;
 }, error => {
     // Do something with request error

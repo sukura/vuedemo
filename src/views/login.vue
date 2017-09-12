@@ -15,6 +15,7 @@
     </div>
 </template>
 <script>
+import { login } from '../api/login';
 export default {
     name: 'login',
     data() {
@@ -59,16 +60,13 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true;
-                    this.$http.post(process.env.BASE_API+'/login',{
-                        username: this.loginForm.username,
-                        password: this.loginForm.password
-                    },{emulateJSON:true}).then((response) => {
-                        this.loading = false;
+                    login(this.loginForm).then(response => {
                         this.$router.push({ path: '/layout' });
-                    },(response) => {
-                        this.loading = true;
-                        console.log('失败');
-                    })
+                    }).catch(error => {
+                        console.log(error);
+                    }).finally(() => {
+                        this.loading = false;
+                    });
                 } else {
                     return false;
                 }
