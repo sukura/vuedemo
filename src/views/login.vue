@@ -59,17 +59,16 @@ export default {
             this.$refs.loginForm.validate(valid => {
                 if (valid) {
                     this.loading = true;
-                    console.log('1241');
-                    // this.$router.push({ path: '/layout' });
-                    this.$http.post(BASE_URL + '/login', function(data) {
-                        console.log(data);
-                    });
-                    // this.$store.dispatch('Login', this.loginForm).then(() => {
-                    //     this.loading = false;
-                    //     this.$router.push({ path: '/' });
-                    // }).catch(() => {
-                    //     this.loading = false;
-                    // });
+                    this.$http.post(process.env.BASE_API+'/login',{
+                        username: this.loginForm.username,
+                        password: this.loginForm.password
+                    },{emulateJSON:true}).then((response) => {
+                        this.loading = false;
+                        this.$router.push({ path: '/layout' });
+                    },(response) => {
+                        this.loading = true;
+                        console.log('失败');
+                    })
                 } else {
                     return false;
                 }
