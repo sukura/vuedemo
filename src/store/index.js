@@ -4,9 +4,9 @@ import axios from 'axios';
 Vue.use(vuex);
 
 export default new vuex.Store({
-    state:{
+    state: {
         show: false,
-        username: 'root',
+        username: 'admin',
         url: process.env.BASE_API
     },
     actions: {

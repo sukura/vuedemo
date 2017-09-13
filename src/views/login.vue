@@ -61,7 +61,7 @@ export default {
                 if (valid) {
                     this.loading = true;
                     login(this.loginForm).then(response => {
-                        this.$router.push({ path: '/layout' });
+                        this.$router.push({ path: '/index' });
                     }).catch(error => {
                         console.log(error);
                     }).finally(() => {
