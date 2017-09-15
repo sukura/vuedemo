@@ -8,11 +8,15 @@ import index from '../views/index';
 import form from '../views/form';
 import error1 from '../views/error/error404';
 import error2 from '../views/error/error500';
+import basic from '../views/form/basic';
+import datepage from '../views/form/datepage';
 
 Vue.use(Router);
 
 export const constantRouterMap = [
     { path: '/', component: Login, hidden: true},
+    // { path: '/error1', component: error1, hidden: true},
+    // { path: '/error2', component: error2, hidden: true},
     {
         path: '/layout',
         component: Layout,
@@ -33,8 +37,17 @@ export const constantRouterMap = [
         name: '错误页面',
         meta: {title: '错误页面'},
         children: [
-            { path: '/error1', component: error1, name: '404', meta: { title: '404'}},
-            { path: '/error2', component: error2, name: '500', meta: { title: '404'}},
+            { path: '/error1', component: error1, meta: { title: '404'}},
+            { path: '/error2', component: error2, meta: { title: '500'}},
+        ]
+    },
+    {
+        path: '/assembly',
+        component: Layout,
+        meta: { title: '功能模块' },
+        children: [
+            { path: '/basic', component: basic, meta: { title: '表单' } },
+            { path: '/datepage', component: datepage, meta: { title: '日期时间' } }
         ]
     }
 ];

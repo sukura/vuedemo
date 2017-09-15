@@ -2,7 +2,7 @@
 <template>
     <div class="error">
         <h2>{{error}}</h2>
-        <p><img src="../../assets/404.gif" alt=""></p>
+        <p><img src="../../assets/500.jpg" alt=""></p>
     </div>
 </template>
 <script>

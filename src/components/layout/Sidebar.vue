@@ -8,10 +8,10 @@
             <el-menu-item index="error2">500</el-menu-item>
         </el-submenu>
         <el-menu-item index="form">表单</el-menu-item>
-        <el-submenu index="4">
-            <template slot="title">组件</template>
-            <el-menu-item index="error1">选项3-1</el-menu-item>
-            <el-menu-item index="error1">选项3-2</el-menu-item>
+        <el-submenu index="assembly">
+            <template slot="title">功能模块</template>
+            <el-menu-item index="basic">form</el-menu-item>
+            <el-menu-item index="datepage">日期时间</el-menu-item>
             <el-menu-item index="error1">选项3-3</el-menu-item>
         </el-submenu>
     </el-menu>
@@ -34,8 +34,8 @@ export default {
         }
     },
     mounted(){
-        this.$router.push(this.curIndex);
-        console.log(this.curIndex);
+        // this.$router.push(this.curIndex);
+        // console.log(this.curIndex);
     }
 };
 </script>

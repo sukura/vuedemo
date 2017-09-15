@@ -24,6 +24,6 @@ export default {
 
 <style scoped>
 section {
-    /*padding: 20px;*/
+    padding: 20px;
 }
 </style>
