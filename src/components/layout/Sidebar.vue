@@ -12,7 +12,7 @@
             <template slot="title">功能模块</template>
             <el-menu-item index="basic">form</el-menu-item>
             <el-menu-item index="datepage">日期时间</el-menu-item>
-            <el-menu-item index="error1">选项3-3</el-menu-item>
+            <!-- <el-menu-item index="error1">选项3-3</el-menu-item> -->
         </el-submenu>
     </el-menu>
 </template>
